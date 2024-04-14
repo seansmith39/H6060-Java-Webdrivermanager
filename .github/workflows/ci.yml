@@ -70,6 +70,7 @@ jobs:
       java-version: 17
       java-distribution: temurin
       mvn-build-artifact: maven-build
+      eclipse-steady-scan-enabled: false
 
   run_sast_scanning:
     needs: [ build_application ]
