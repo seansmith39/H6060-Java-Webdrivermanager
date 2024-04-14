@@ -1,0 +1,86 @@
+name: WebdriverManager CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+permissions: write-all
+
+jobs:
+  build_application:
+    name: Compile with JDK 17
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.2.1
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Build Maven Application
+        shell: bash
+        run: mvn clean install
+
+      - name: Create SBOM For webdrivermanager
+        uses: anchore/sbom-action@v0.15.10
+        with:
+          path: ./target/
+          artifact-name: webdrivermanager.cyclonedx
+          dependency-snapshot: true
+          format: cyclonedx-json
+
+      - name: Tar Maven Build Repository
+        shell: bash
+        run: tar -czf maven-build.tgz -C ~ .m2/repository
+
+      - name: Upload Maven Build Repository
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-build
+          path: maven-build.tgz
+
+      - name: Generate Maven Dependency Tree
+        shell: bash
+        run: mvn dependency:tree -DoutputFile=maven_dep_tree.txt
+
+      - name: Create Maven Dependency Tree Zip File
+        shell: bash
+        run: find . -type f -name 'maven_dep_tree.txt' -exec zip -r mvn-dependency-tree.zip {} +
+
+      - name: Upload Maven Dependency Tree Zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-dependency-tree
+          path: mvn-dependency-tree.zip
+
+  run_sca_scanning:
+    needs: [ build_application ]
+    name: Run SCA Scanning Workflow
+    uses: seansmith39/H6060-Experiment-1-SCA-Scans/.github/workflows/sca_scan_mvn.yml@v1.0.4
+    secrets: inherit
+    with:
+      project-name: WebDriverManager
+      java-version: 17
+      java-distribution: temurin
+      mvn-build-artifact: maven-build
+      eclipse-steady-scan-enabled: false
+
+  run_sast_scanning:
+    needs: [ build_application ]
+    name: Run SAST Scanning Workflow
+    uses: seansmith39/H6060-Experiment-1-SAST-Scans/.github/workflows/sast_scan_mvn.yml@v1.0.3
+    secrets: inherit
+    with:
+      sonarqube-project-name: H6060-WebDriverManager
+      mvn-build-command: mvn clean install
+      mvn-jacoco-command: mvn -B test -Dtest=!Record*
+      jacoco-coverage-file: 'target/site/jacoco.xml'
+      java-version: 17
+      java-distribution: temurin
