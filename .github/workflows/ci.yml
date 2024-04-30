@@ -63,7 +63,7 @@ jobs:
   run_sca_scanning:
     needs: [ build_application ]
     name: Run SCA Scanning Workflow
-    uses: seansmith39/H6060-Experiment-Workflows/.github/workflows/experiment_1_sca_mvn.yml@v1.0.2
+    uses: seansmith39/H6060-Experiment-Workflows/.github/workflows/experiment_1_sca_mvn.yml@v1.0.4
     secrets: inherit
     with:
       project-name: WebDriverManager
@@ -74,12 +74,12 @@ jobs:
   run_sast_scanning:
     needs: [ build_application ]
     name: Run SAST Scanning Workflow
-    uses: seansmith39/H6060-Experiment-Workflows/.github/workflows/experiment_1_sast_mvn.yml@v1.0.3
+    uses: seansmith39/H6060-Experiment-Workflows/.github/workflows/experiment_1_sast_mvn.yml@v1.0.4
     secrets: inherit
     with:
       sonarqube-project-name: H6060-WebDriverManager
-      mvn-build-command: mvn clean install
-      mvn-jacoco-command: mvn -B test -Dtest=!Record*
+      mvn-build-command: mvn -Dmaven.test.skip=true clean install
+      jacoco-scan-enabled: false
       jacoco-coverage-file: 'target/site/jacoco.xml'
       java-version: 17
       java-distribution: temurin
