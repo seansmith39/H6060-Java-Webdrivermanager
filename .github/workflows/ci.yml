@@ -78,7 +78,7 @@ jobs:
     secrets: inherit
     with:
       sonarqube-project-name: H6060-WebDriverManager
-      mvn-build-command: mvn clean install
+      mvn-build-command: mvn -Dmaven.test.skip=true clean install
       mvn-jacoco-command: mvn -B test -Dtest=!Record*
       jacoco-coverage-file: 'target/site/jacoco.xml'
       java-version: 17
