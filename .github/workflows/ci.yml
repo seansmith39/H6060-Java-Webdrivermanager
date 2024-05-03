@@ -63,13 +63,14 @@ jobs:
   run_sca_scanning:
     needs: [ build_application ]
     name: Run SCA Scanning Workflow
-    uses: seansmith39/H6060-Experiment-Workflows/.github/workflows/experiment_1_sca_mvn.yml@v1.0.4
+    uses: seansmith39/H6060-Experiment-Workflows/.github/workflows/experiment_1_sca_mvn.yml@v1.0.5
     secrets: inherit
     with:
       project-name: WebDriverManager
       java-version: 17
       java-distribution: temurin
       mvn-build-artifact: maven-build
+      eclipse-steady-report-enabled: false
 
   run_sast_scanning:
     needs: [ build_application ]
