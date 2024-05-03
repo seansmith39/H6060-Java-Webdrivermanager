@@ -26,7 +26,7 @@ jobs:
 
       - name: Build Maven Application
         shell: bash
-        run: mvn clean install
+        run: mvn -Dmaven.test.skip=true clean install
 
       - name: Create SBOM For webdrivermanager
         uses: anchore/sbom-action@v0.15.10
@@ -63,24 +63,24 @@ jobs:
   run_sca_scanning:
     needs: [ build_application ]
     name: Run SCA Scanning Workflow
-    uses: seansmith39/H6060-Experiment-1-SCA-Scans/.github/workflows/sca_scan_mvn.yml@v1.0.4
+    uses: seansmith39/H6060-Experiment-Workflows/.github/workflows/experiment_1_sca_mvn.yml@v1.0.5
     secrets: inherit
     with:
       project-name: WebDriverManager
       java-version: 17
       java-distribution: temurin
       mvn-build-artifact: maven-build
-      eclipse-steady-scan-enabled: false
+      eclipse-steady-report-enabled: false
 
   run_sast_scanning:
     needs: [ build_application ]
     name: Run SAST Scanning Workflow
-    uses: seansmith39/H6060-Experiment-1-SAST-Scans/.github/workflows/sast_scan_mvn.yml@v1.0.3
+    uses: seansmith39/H6060-Experiment-Workflows/.github/workflows/experiment_1_sast_mvn.yml@v1.0.4
     secrets: inherit
     with:
       sonarqube-project-name: H6060-WebDriverManager
-      mvn-build-command: mvn clean install
-      mvn-jacoco-command: mvn -B test -Dtest=!Record*
+      mvn-build-command: mvn -Dmaven.test.skip=true clean install
+      jacoco-scan-enabled: false
       jacoco-coverage-file: 'target/site/jacoco.xml'
       java-version: 17
       java-distribution: temurin
