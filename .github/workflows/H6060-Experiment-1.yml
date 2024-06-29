@@ -83,7 +83,7 @@ jobs:
           java-version: 17
 
       - name: Build and Upload Maven Package
-        uses: seansmith39/H6060-Experiment-Resources/.github/actions/maven/maven-build-upload@Add_SBOM_Job
+        uses: seansmith39/H6060-Experiment-Resources/.github/actions/maven/maven-build-upload@main
         with:
           build-command: mvn -Dmaven.test.skip=true clean install
 
@@ -101,7 +101,7 @@ jobs:
 
   java-scanning:
     name: Run SCA and SAST Java Scanning Workflow
-    uses: seansmith39/H6060-Experiment-Resources/.github/workflows/experiment-1-java.yml@Add_SBOM_Job
+    uses: seansmith39/H6060-Experiment-Resources/.github/workflows/experiment-1-java.yml@main
     needs: build-application
     secrets: inherit
     with:
