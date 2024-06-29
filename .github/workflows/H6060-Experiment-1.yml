@@ -101,10 +101,11 @@ jobs:
 
   java-scanning:
     name: Run SCA and SAST Java Scanning Workflow
-    uses: seansmith39/H6060-Experiment-Resources/.github/workflows/experiment-1-java.yml@main
+    uses: seansmith39/H6060-Experiment-Resources/.github/workflows/experiment-1-java.yml@Specify_SBOM_Image
     needs: build-application
     secrets: inherit
     with:
+      sbom-image-to-scan: webdrivermanager-5.8.1-SNAPSHOT.jar
       sca-eclipse-steady-enabled: ${{ inputs.sca-eclipse-steady-enabled }}
       sca-snyk-enabled: ${{ inputs.sca-snyk-enabled }}
       sca-owasp-dependency-check-enabled: ${{ inputs.sca-owasp-dependency-check-enabled }}
