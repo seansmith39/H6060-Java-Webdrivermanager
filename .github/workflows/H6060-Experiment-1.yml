@@ -96,7 +96,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: target/site/jacoco.xml
+          path: target/site/jacoco/jacoco.xml
           if-no-files-found: error
 
       - name: Create Maven Dependency Tree
