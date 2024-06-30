@@ -96,7 +96,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: target/site/jacoco.xml
+          path: target/site/jacoco/jacoco.xml
           if-no-files-found: error
 
       - name: Create Maven Dependency Tree
@@ -122,5 +122,6 @@ jobs:
       sast-horusec-enabled: ${{ inputs.sast-horusec-enabled }}
       sast-snyk-code-enabled: ${{ inputs.sast-snyk-code-enabled }}
       project-name: H6060-Java-Webdrivermanager
-      eclipse-steady-workspace-token: 1A8CC68377BFEEA81CDF80CFA757872E
-      eclipse-steady-project-source-directories: src
+      eclipse-steady-workspace-token: CFA47C6D9DF7707772C2E7FB0C115F2E
+      eclipse-steady-project-source-directories: src/main
+      build-directory: target
