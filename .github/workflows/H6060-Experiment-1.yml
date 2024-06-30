@@ -124,4 +124,5 @@ jobs:
       project-name: H6060-Java-Webdrivermanager
       eclipse-steady-workspace-token: CFA47C6D9DF7707772C2E7FB0C115F2E
       eclipse-steady-project-source-directories: src/main
+      coverage-report-name: jacoco.xml
       build-directory: target
