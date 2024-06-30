@@ -71,7 +71,7 @@ permissions: write-all
 
 jobs:
   build-application:
-    name: Build application
+    name: Build Application
     runs-on: ubuntu-latest
     steps:
       # Branched from tag 5.8.0
@@ -98,6 +98,12 @@ jobs:
           name: coverage-report
           path: target/site/jacoco.xml
           if-no-files-found: error
+
+      - name: Create Maven Dependency Tree
+        uses: seansmith39/H6060-Experiment-Resources/.github/actions/maven/maven-dependency-tree@main
+
+      - name: Create CycloneDX SBOM
+        uses: seansmith39/H6060-Experiment-Resources/.github/actions/maven/maven-sbom@main
 
   java-scanning:
     name: Run SCA and SAST Java Scanning Workflow
