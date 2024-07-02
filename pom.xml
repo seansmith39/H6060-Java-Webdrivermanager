@@ -432,6 +432,7 @@
             <properties>
                 <vulas.version>3.2.5</vulas.version>
                 <vulas.shared.backend.serviceUrl>http://steady.b00158319.com:8033/backend/</vulas.shared.backend.serviceUrl>
+                <vulas.shared.cia.serviceUrl>http://steady.b00158319.com:8033/cia</vulas.shared.cia.serviceUrl>
                 <vulas.core.space.token>CFA47C6D9DF7707772C2E7FB0C115F2E</vulas.core.space.token>
                 <vulas.core.appContext.group>${project.groupId}</vulas.core.appContext.group>
                 <vulas.core.appContext.artifact>${project.artifactId}</vulas.core.appContext.artifact>
@@ -446,6 +447,7 @@
                         <configuration>
                             <layeredConfiguration>
                                 <vulas.shared.backend.serviceUrl>${vulas.shared.backend.serviceUrl}</vulas.shared.backend.serviceUrl>
+                                <vulas.shared.cia.serviceUrl>${vulas.shared.cia.serviceUrl}</vulas.shared.cia.serviceUrl>
                                 <vulas.core.space.token>${vulas.core.space.token}</vulas.core.space.token>
 
                                 <vulas.core.appContext.group>${vulas.core.appContext.group}</vulas.core.appContext.group>
@@ -454,7 +456,7 @@
 
                                 <vulas.shared.tmpDir>${project.build.directory}/vulas/tmp</vulas.shared.tmpDir>
                                 <vulas.core.uploadDir>${project.build.directory}/vulas/upload</vulas.core.uploadDir>
-                                <vulas.core.app.sourceDir>${project.build.directory}/classes,${project.basedir}/src/main/java,${project.basedir}/src/main/python</vulas.core.app.sourceDir>
+                                <vulas.core.app.sourceDir>${project.build.directory}/classes,${project.basedir}/src/main/java</vulas.core.app.sourceDir>
 
                                 <!-- steady:instr : Instruments JAR/WAR files found in source dir,
                                     and writes to target dir. Files in include dir are put into /WEB-INF/lib
@@ -465,7 +467,7 @@
                                 <vulas.core.instr.libDir>${project.build.directory}/vulas/lib</vulas.core.instr.libDir>
                                 <vulas.core.instr.writeCode>false</vulas.core.instr.writeCode>
                                 <vulas.core.instr.instrumentorsChoosen>org.eclipse.steady.java.monitor.trace.SingleTraceInstrumentor</vulas.core.instr.instrumentorsChoosen>
-                                <vulas.core.instr.searchRecursive>false</vulas.core.instr.searchRecursive>
+                                <vulas.core.instr.searchRecursive>true</vulas.core.instr.searchRecursive>
                                 <vulas.core.monitor.periodicUpload.enabled>false</vulas.core.monitor.periodicUpload.enabled>
                                 <vulas.core.instr.maxStacktraces>10</vulas.core.instr.maxStacktraces>
 
@@ -475,6 +477,8 @@
 
                                 <!-- steady:report -->
                                 <vulas.report.reportDir>${project.build.directory}/vulas/report</vulas.report.reportDir>
+                                <vulas.report.exceptionExcludeUnassessed>off</vulas.report.exceptionExcludeUnassessed>
+                                <vulas.report.exceptionThreshold>noException</vulas.report.exceptionThreshold>
                             </layeredConfiguration>
                         </configuration>
                     </plugin>
